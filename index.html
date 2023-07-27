@@ -19,93 +19,91 @@
     <div class="px-1">
       <!-- HEADER -->
 
-      <div class="py-3 row bg-body-tertiary mb-3">
+      <div id="header" class="row bg-body-tertiary">
         <h4 class="col">Mack Code Player</h4>
         <div class="col btns">
-          <button name="html" class="btn btn-secondary">HTML</button>
-          <button name="css" class="btn btn-secondary">CSS</button>
-          <button name="javascript" class="btn btn-secondary">
-            JavaScript
+          <button id="html" class="btn btn-secondary activeBtn">HTML</button>
+          <button id="css" class="btn btn-secondary">CSS</button>
+          <button id="js" class="btn btn-secondary">JavaScript</button>
+          <button id="output" class="btn btn-secondary activeBtn">
+            Output
           </button>
-          <button name="output" class="btn btn-secondary">Output</button>
         </div>
       </div>
 
       <!-- CONTENTS -->
 
-      <div class="row g-1">
-        <div id="html" class="col">
-          <label for="htmlContents">HTML</label>
-          <textarea
-            type="text"
-            id="htmlContents"
-            class="w-100 bg-body-secondary"
-          ></textarea>
-        </div>
+      <textarea type="text" id="htmlPanel" class="panel" placeholder="HTML">
+<p>Hello World!</p></textarea
+      >
+      <textarea
+        type="text"
+        id="cssPanel"
+        class="panel hidden"
+        placeholder="CSS"
+      >
+.p {color: red;}</textarea
+      >
+      <textarea
+        type="text"
+        id="jsPanel"
+        class="panel hidden"
+        placeholder="JavaScript"
+      >
+console.log("Hello World!")</textarea
+      >
 
-        <div id="css" class="col">
-          <label for="cssContents">CSS</label>
-          <textarea
-            type="text"
-            id="cssContents"
-            class="w-100 bg-body-secondary"
-          ></textarea>
-        </div>
-
-        <div id="javascript" class="col">
-          <label for="javascriptContents">JavaScript</label>
-          <textarea
-            type="text"
-            id="javascriptContents"
-            class="w-100 bg-body-secondary"
-          ></textarea>
-        </div>
-
-        <div id="output" class="col-12 col-lg">
-          <label for="javascriptContents">Output</label>
-          <div class="px-1 w-100">
-            <style id="outputStyle" type="text/css"></style>
-
-            <body>
-              <div id="outputContents"></div>
-            </body>
-
-            <script id="outputScript" type="text/javascript"></script>
-          </div>
-        </div>
-      </div>
+      <iframe id="outputPanel" class="panel">
+        <style id="outputStyle" type="text/css"></style>
+        <script id="outputScript" type="text/javascript"></script>
+      </iframe>
     </div>
 
     <!-- SCRIPTS -->
 
     <script type="text/javascript">
+      $("button").hover(
+        function () {
+          $("button").addClass("hoverBtn");
+        },
+        function () {
+          $("button").removeClass("hoverBtn");
+        }
+      );
+
       var onOff = true;
       $(function () {
         $("button").click(function () {
-          const val = $(this).attr("name");
-          if (onOff) {
-            $("#" + val).fadeOut(500);
-            onOff = false;
-          } else {
-            $("#" + val).fadeIn(1000);
-            onOff = true;
-          }
+          $(this).toggleClass("activeBtn");
+          $(this).removeClass("hoverBtn");
+
+          var hidePanel = $(this).attr("id") + "Panel";
+
+          $("#" + hidePanel).toggleClass("hidden");
+
+          var numItems = 4 - $(".hidden").length;
+
+          $(".panel").width($(window).width() / numItems - 14);
         });
       });
 
+      $("iframe").contents().find("html").html($("#htmlPanel").val());
+
       $(function () {
         $("textarea").bind("input propertychange", function () {
-          if ($(this).attr("id") == "htmlContents") {
-            $("#outputContents").html(this.value);
+          if ($(this).attr("id") == "htmlPanel") {
+            $("iframe").contents().find("html").html(this.value);
           }
-          if ($(this).attr("id") == "cssContents") {
+          if ($(this).attr("id") == "cssPanel") {
             $("#outputStyle").text(this.value);
           }
-          if ($(this).attr("id") == "javascriptContents") {
+          if ($(this).attr("id") == "jsPanel") {
             $("#outputScript").text(this.value);
           }
         });
       });
+
+      $(".panel").height($(window).height() - $("#header").height() - 14);
     </script>
   </body>
 </html>
