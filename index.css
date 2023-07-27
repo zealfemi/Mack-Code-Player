@@ -3,24 +3,33 @@
 }
 
 #header {
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
   padding: 5px;
+  height: 45px;
+}
+
+#logo {
+  float: left !important;
+  display: inline !important;
+  font-weight: bold !important;
+  font-size: 120%;
+  padding: 1px 5px !important;
 }
 
 .btns {
-  display: flex !important;
-  justify-content: end;
-}
-
-input {
+  width: 300px !important;
+  margin: 0 auto !important;
 }
 
 button {
+  padding: 4px !important;
+  float: left !important;
   border: 1px solid;
   font-size: smaller !important;
   cursor: pointer;
   border-radius: 0;
+  margin: 0 !important;
+  margin-right: 1px !important;
 }
 
 .hoverBtn {
@@ -52,12 +61,10 @@ textarea {
 .btns :nth-child(2),
 .btns :nth-child(3) {
   border-radius: 0px;
-  margin-right: 2px;
 }
 
 .btns :first-child {
   border-radius: 5px 0px 0px 5px;
-  margin-right: 2px;
 }
 
 .btns :last-child {

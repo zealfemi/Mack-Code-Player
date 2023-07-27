@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mack Code Player (Text Editor)</title>
+    <title>Mack CodePlayer (Text Editor)</title>
 
     <script type="text/javascript" src="/jquery.min.js"></script>
     <script type="text/javascript" src="/jquery-ui/jquery-ui.js"></script>
@@ -19,9 +19,9 @@
     <div class="px-1">
       <!-- HEADER -->
 
-      <div id="header" class="row bg-body-tertiary">
-        <h4 class="col">Mack Code Player</h4>
-        <div class="col btns">
+      <div id="header" class="bg-body-tertiary">
+        <div id="logo">Mack CodePlayer</div>
+        <div class="btns">
           <button id="html" class="btn btn-secondary activeBtn">HTML</button>
           <button id="css" class="btn btn-secondary">CSS</button>
           <button id="js" class="btn btn-secondary">JavaScript</button>
@@ -34,7 +34,7 @@
       <!-- CONTENTS -->
 
       <textarea type="text" id="htmlPanel" class="panel" placeholder="HTML">
-<p>Hello World!</p></textarea
+<p id="hi">Hello World!</p></textarea
       >
       <textarea
         type="text"
@@ -42,7 +42,7 @@
         class="panel hidden"
         placeholder="CSS"
       >
-.p {color: red;}</textarea
+p {color: red;}</textarea
       >
       <textarea
         type="text"
@@ -50,7 +50,7 @@
         class="panel hidden"
         placeholder="JavaScript"
       >
-console.log("Hello World!")</textarea
+document.getElementById("hi").innerHTML = "Hello Mackie"</textarea
       >
 
       <iframe id="outputPanel" class="panel">
@@ -62,6 +62,24 @@ console.log("Hello World!")</textarea
     <!-- SCRIPTS -->
 
     <script type="text/javascript">
+      function updateOutput() {
+        $("iframe").contents().find("html").html(`
+            <html>
+              <head>
+                <style>
+                  ${$("#cssPanel").val()}
+                </style>
+              </head>
+              <body>
+                ${$("#htmlPanel").val()}
+              </body>
+            </html>
+          `);
+        document
+          .getElementById("outputPanel")
+          .contentWindow.eval($("#jsPanel").val());
+      }
+
       $("button").hover(
         function () {
           $("button").addClass("hoverBtn");
@@ -87,20 +105,10 @@ console.log("Hello World!")</textarea
         });
       });
 
-      $("iframe").contents().find("html").html($("#htmlPanel").val());
+      updateOutput();
 
-      $(function () {
-        $("textarea").bind("input propertychange", function () {
-          if ($(this).attr("id") == "htmlPanel") {
-            $("iframe").contents().find("html").html(this.value);
-          }
-          if ($(this).attr("id") == "cssPanel") {
-            $("#outputStyle").text(this.value);
-          }
-          if ($(this).attr("id") == "jsPanel") {
-            $("#outputScript").text(this.value);
-          }
-        });
+      $("textarea").bind("input propertychange", function () {
+        updateOutput();
       });
 
       $(".panel").height($(window).height() - $("#header").height() - 14);
