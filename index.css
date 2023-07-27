@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btns {
+  display: flex !important;
+  justify-content: end;
+}
+
+input {
+}
+
+button {
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+textarea {
+  font-size: 12px !important;
+  border: 1px solid gray !important;
+  height: 450px;
+  resize: none !important;
+  scroll-behavior: auto;
+}
+
+button:hover {
+  background-color: gainsboro;
+}
+
+.btns :nth-child(2),
+.btns :nth-child(3) {
+  border-radius: 0px;
+  margin-right: 2px;
+}
+
+.btns :first-child {
+  border-radius: 5px 0px 0px 5px;
+  margin-right: 2px;
+}
+
+.btns :last-child {
+  border-radius: 0px 5px 5px 0px;
+}

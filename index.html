@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MackCode (Playing with jQuery)</title>
+
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-ui/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="/jquery-ui/jquery-ui.css" />
+    <link rel="stylesheet" href="/index.css" />
+
+    <link rel="stylesheet" href="/bootstrap.min.css" />
+    <script type="text/javascript" src="/bootstrap.min.js"></script>
+  </head>
+  <body class="bg-body-secondary">
+    <div class="px-1">
+      <!-- HEADER -->
+
+      <div class="py-3 row bg-body-tertiary mb-3">
+        <h4 class="col">Mack Code</h4>
+        <div class="col btns">
+          <button name="html" class="btn btn-secondary">HTML</button>
+          <button name="css" class="btn btn-secondary">CSS</button>
+          <button name="javascript" class="btn btn-secondary">
+            JavaScript
+          </button>
+          <button name="output" class="btn btn-secondary">Output</button>
+        </div>
+      </div>
+
+      <!-- CONTENTS -->
+
+      <div class="row g-1">
+        <div id="html" class="col">
+          <label for="htmlContents">HTML</label>
+          <textarea
+            type="text"
+            id="htmlContents"
+            class="w-100 bg-body-secondary"
+          ></textarea>
+        </div>
+
+        <div id="css" class="col">
+          <label for="cssContents">CSS</label>
+          <textarea
+            type="text"
+            id="cssContents"
+            class="w-100 bg-body-secondary"
+          ></textarea>
+        </div>
+
+        <div id="javascript" class="col">
+          <label for="javascriptContents">JavaScript</label>
+          <textarea
+            type="text"
+            id="javascriptContents"
+            class="w-100 bg-body-secondary"
+          ></textarea>
+        </div>
+
+        <div id="output" class="col-12 col-lg">
+          <label for="javascriptContents">Output</label>
+          <div class="px-1 w-100">
+            <style id="outputStyle" type="text/css"></style>
+
+            <body>
+              <div id="outputContents"></div>
+            </body>
+
+            <script id="outputScript" type="text/javascript"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+
+    <script type="text/javascript">
+      var onOff = true;
+      $(function () {
+        $("button").click(function () {
+          const val = $(this).attr("name");
+          if (onOff) {
+            $("#" + val).fadeOut(500);
+            onOff = false;
+          } else {
+            $("#" + val).fadeIn(1000);
+            onOff = true;
+          }
+        });
+      });
+
+      $(function () {
+        $("textarea").bind("input propertychange", function () {
+          if ($(this).attr("id") == "htmlContents") {
+            $("#outputContents").html(this.value);
+          }
+          if ($(this).attr("id") == "cssContents") {
+            $("#outputStyle").text(this.value);
+          }
+          if ($(this).attr("id") == "javascriptContents") {
+            $("#outputScript").text(this.value);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
